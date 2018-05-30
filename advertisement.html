@@ -2,65 +2,93 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Found</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+	<meta charset="UTF-8">
+	<title>Found</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
 </head>
 
 <body>
-    <nav>
-        <div class="nav-wrapper">
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        </div>
-    </nav>
-    <ul id="slide-out" class="sidenav">
-        <li>
-            <div class="user-view">
-                <div class="background">
-                    <img src="img/space.jpg">
-                </div>
-                <a href="#user"><img class="circle" src="img/goku.jpg"></a>
-                <a href="#name"><span class="white-text name">Son Goku</span></a>
-                <a href="#nickname"><span class="white-text nickname">goku1337</span></a>
-            </div>
-        </li>
-        <li><a href="found.html"><i class="material-icons">cloud</i>Найдены</a></li>
-        <li><a href="lost.html"><i class="material-icons">cloud</i>Потеряны</a></li>
-        <li><a href="index.html"><i class="material-icons">cloud</i>Главная</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-    </ul>
-    <input class="search_title" placeholder="Что нашли?"/>
-    <input class="search_description" placeholder="Описание"/>
-    <input class="search_contact" placeholder="Контакты"/>
-    <button class="btn">Добавить</button>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js">
-    </script>
-    <script>
-        var input = document.querySelector(".search_title");
-        var input1 = document.querySelector(".search_description");
-        var input2 = document.querySelector(".search_contact");
-        var btn = document.querySelector(".btn");
-        btn.onclick = function(){
-        $.ajax({
-            url: "http://127.0.0.1:8000/advertisement",
-            data:{
-              creating: input.value,
-              creating1: input1.value,
-              creating2: input2.value
-            },
-            success: function(text) {
-                console.log(text);
-            }
-        });
-        }
-    </script>
+	<nav>
+		<div class="nav-wrapper">
+			<a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		</div>
+	</nav>
+	<ul id="slide-out" class="sidenav">
+		<li>
+			<div class="user-view">
+				<div class="background">
+					<img src="img/space.jpg">
+				</div>
+				<a href="#user"><img class="circle" src="img/goku.jpg"></a>
+				<a href="#name"><span class="white-text name">Son Goku</span></a>
+				<a href="#nickname"><span class="white-text nickname">goku1337</span></a>
+			</div>
+		</li>
+		<li><a href="found.html"><i class="material-icons">cloud</i>Найдены</a></li>
+		<li><a href="lost.html"><i class="material-icons">cloud</i>Потеряны</a></li>
+		<li><a href="index.html"><i class="material-icons">cloud</i>Главная</a></li>
+		<li><a href="myAdv.html"><i class="material-icons">cloud</i>Мои объявления</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+	</ul>
+	<div class="container">
+		<input class="search_title" placeholder="Вещь" />
+		<input class="search_description" placeholder="Описание" />
+		<div class="input-field col s12">
+			<select class="s_s">
+      <optgroup label="Статус">
+        <option value="0">Потерян</option>
+        <option value="1">Найден</option>
+      </optgroup>
+    </select>
+		</div>
+		<input class="search_contact" placeholder="Контакты" />
+
+		<button class="btn">Добавить</button>
+	</div>
+
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js">
+
+
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js">
+
+
+	</script>
+	<script>
+		var input = document.querySelector(".search_title");
+		var input1 = document.querySelector(".search_description");
+		var input2 = document.querySelector(".search_contact");
+		var options = document.querySelector(".s_s");
+		var btn = document.querySelector(".btn");
+		btn.onclick = function() {
+			$.ajax({
+				url: "http://192.168.1.34:8000/advertisement",
+				data: {
+					title: input.value,
+					description: input1.value,
+					contact: input2.value,
+					status: options.value
+				},
+				success: function(text) {
+					console.log(text);
+					localStorage.setItem('itemId', text);
+				}
+			});
+		}
+		$(document).ready(function() {
+			$('select').formSelect();
+		});
+		$(document).ready(function() {
+			$('.sidenav').sidenav();
+		});
+		
+	</script>
 </body>
 
 </html>
